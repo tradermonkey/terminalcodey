@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database.</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .terminal {
+            text-align: center;
+        }
+        input[type="text"] {
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 5px;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 400px;
+        }
+        button {
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 5px 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: white;
+            color: black;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <h1>Enter Access Code</h1>
+        <input type="text" id="codeInput" placeholder="Type your code here...">
+        <br>
+        <button onclick="validateCode()">Submit</button>
+        <div id="message" class="message"></div>
+    </div>
+
+    <audio id="codeSound1" src="/Users/Alex/Desktop/database/files/wire.mp3"></audio>
+    <audio id="codeSound2" src="/Users/Alex/Desktop/database/files/Untitled_Project_V3.mp3"></audio>
+    <audio id="codeSound3" src="sound3.mp3"></audio>
+    <audio id="codeSound4" src="sound3.mp3"></audio>
+    <audio id="codeSound5" src="sound3.mp3"></audio>
+    <audio id="codeSound6" src="sound3.mp3"></audio>
+
+<script>
+    const validCodes = {
+        "juan": "/Users/Alex/Desktop/database/subpages/juan.html",
+        "annie": "/Users/Alex/Desktop/database/subpages/annie.html",
+        "katherine": "/Users/Alex/Desktop/database/subpages/katherine.html",
+        "sad story": "/Users/Alex/Desktop/database/files/gormit.mp4",
+        "kanye": "sound1", // Code that triggers sound
+        "tradermonkey": "sound2", 
+        "playsound3": "sound3", 
+        "mute": "stop", // Code to stop all audio
+        "yes": "display", // Code to display custom text
+        "hi": "greetings", 
+        "hello": "greetings", 
+        "hiya": "greetings", 
+        "salutations": "greetings", 
+        "hiii": "greetings", 
+        "hii": "greetings", 
+        "hey": "greetings", 
+        "hallo": "greetings", 
+        "kys": "warning", 
+        "ily": "info", 
+        "cum": "erroralert",
+        "9+10": "brauh" 
+    };
+
+    let lastInput = "";
+
+    function validateCode() {
+        const input = document.getElementById('codeInput').value.toLowerCase(); // Convert input to lowercase
+        const message = document.getElementById('message');
+        const sound1 = document.getElementById('codeSound1');
+        const sound2 = document.getElementById('codeSound2');
+        const sound3 = document.getElementById('codeSound3');
+        const sound4 = document.getElementById('codeSound4');
+        const sound5 = document.getElementById('codeSound5');
+        const sound6 = document.getElementById('codeSound6');
+
+        if (validCodes[input]) {
+            if (validCodes[input] === "sound1") {
+                message.textContent = "Code accepted!";
+                message.className = "message success";
+                sound2.pause();
+                sound3.pause();
+                if (lastInput === input) {
+                    sound1.currentTime = 0;
+                }
+                sound1.play();
+            } else if (validCodes[input] === "sound2") {
+                message.textContent = "Code accepted!";
+                message.className = "message success";
+                sound1.pause();
+                sound3.pause();
+                if (lastInput === input) {
+                    sound2.currentTime = 0;
+                }
+                sound2.play();
+            } else if (validCodes[input] === "sound3") {
+                message.textContent = "Code accepted!";
+                message.className = "message success";
+                sound1.pause();
+                sound2.pause();
+                if (lastInput === input) {
+                    sound3.currentTime = 0;
+                }
+                sound3.play();
+            } else if (validCodes[input] === "stop") {
+                message.textContent = "Code accepted!";
+                message.className = "message success";
+                sound1.pause();
+                sound1.currentTime = 0;
+                sound2.pause();
+                sound2.currentTime = 0;
+                sound3.pause();
+                sound3.currentTime = 0;
+            } else if (validCodes[input] === "display") {
+                message.textContent = "yes";
+                message.className = "message success";
+            } else if (validCodes[input] === "greetings") {
+                message.textContent = "Hello!.";
+                message.className = "message success";
+            } else if (validCodes[input] === "warning") {
+                message.textContent = ":(";
+                message.className = "message error";
+            } else if (validCodes[input] === "info") {
+                message.textContent = "I'm taken sorry.";
+                message.className = "message success";
+            } else if (validCodes[input] === "erroralert") {
+                message.textContent = "nice one.";
+                message.className = "message error";
+            } else if (validCodes[input] === "brauh") {
+                message.textContent = "21";
+                message.className = "message success";
+            } else {
+                message.textContent = "Code accepted!";
+                message.className = "message success";
+                window.open(validCodes[input], '_blank');
+            }
+        } else {
+            message.textContent = "Incorrect code.";
+            message.className = "message error";
+        }
+
+        // Clear the input field after each submission
+        document.getElementById('codeInput').value = "";
+
+        lastInput = input;
+    }
+
+    // Add an event listener for the Enter key to trigger code submission
+    document.getElementById('codeInput').addEventListener('keypress', function(event) {
+        const input = document.getElementById('codeInput').value.trim(); // Get the input value and remove extra spaces
+
+        // Only trigger the code validation if the input is not empty
+        if (event.key === 'Enter' && input !== '') {
+            event.preventDefault();  // Prevent the default action (form submission, etc.)
+            validateCode();  // Trigger code validation on Enter press
+        }
+    });
+</script>
